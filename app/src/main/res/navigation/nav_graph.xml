@@ -9,6 +9,22 @@
         android:id="@+id/filmFragment"
         android:name="com.example.github2.ui.fragment.FilmFragment"
         android:label="fragment_film"
-        tools:layout="@layout/fragment_film" />
+        tools:layout="@layout/fragment_film" >
+        <action
+            android:id="@+id/action_filmFragment_to_detailFilmFragment"
+            app:destination="@id/detailFilmFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFilmFragment"
+        android:name="com.example.github2.ui.fragment.detail.DetailFilmFragment"
+        android:label="fragment_detail_film"
+        tools:layout="@layout/fragment_detail_film" >
+        <argument
+            android:name="img"
+            app:argType="string" />
+        <argument
+            android:name="name"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

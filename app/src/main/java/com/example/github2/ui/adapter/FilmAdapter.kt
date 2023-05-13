@@ -1,16 +1,34 @@
 package com.example.github2.ui.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.github2.databinding.ItemFilmBinding
 import com.example.github2.model.FilmModel
+import java.util.ArrayList
 
-class FilmAdapter(private var listFilm : MutableList<FilmModel>) : RecyclerView.Adapter<FilmAdapter.ViewHolder>() {
+class FilmAdapter(
+    private var listFilm: MutableList<FilmModel>,
+    val onItemClick: (modelBook: FilmModel) -> Unit,
+) : RecyclerView.Adapter<FilmAdapter.ViewHolder>() {
 
-    class ViewHolder(var binding: ItemFilmBinding) :
+    @SuppressLint("NotifyDataSetChanged")
+    fun setupObserves(modelPictures: ArrayList<FilmModel>) {
+        this.listFilm = modelPictures
+        notifyDataSetChanged()
+    }
+
+    inner class ViewHolder(var binding: ItemFilmBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            itemView.setOnClickListener {
+                onItemClick(listFilm[adapterPosition])
+            }
+
+        }
 
         fun onBind(filmModel: FilmModel) {
             Glide.with(binding.ivImage.context)
@@ -23,16 +41,17 @@ class FilmAdapter(private var listFilm : MutableList<FilmModel>) : RecyclerView.
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             ItemFilmBinding.inflate(
-            LayoutInflater.from(
-                parent.context
-            ), parent,
-            false
-        ))
+                LayoutInflater.from(
+                    parent.context
+                ), parent,
+                false
+            )
+        )
     }
-
-    override fun getItemCount(): Int = listFilm.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.onBind(listFilm[position])
     }
+
+    override fun getItemCount(): Int = listFilm.size
 }
