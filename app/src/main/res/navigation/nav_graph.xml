@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/filmFragment"
-        android:name="com.example.github2.ui.fragment.FilmFragment"
+        android:name="com.example.github2.ui.fragment.film.FilmFragment"
         android:label="fragment_film"
         tools:layout="@layout/fragment_film" >
         <action
@@ -16,6 +16,10 @@
         <action
             android:id="@+id/action_filmFragment_to_addingNewItemsFragment2"
             app:destination="@id/addingNewItemsFragment2" />
+        <argument
+            android:name="textsave"
+            android:defaultValue=""
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/detailFilmFragment"
@@ -33,6 +37,10 @@
         android:id="@+id/addingNewItemsFragment2"
         android:name="com.example.github2.ui.fragment.additem.AddingNewItemsFragment"
         android:label="fragment_adding_new_items"
-        tools:layout="@layout/fragment_adding_new_items" />
+        tools:layout="@layout/fragment_adding_new_items" >
+        <action
+            android:id="@+id/action_addingNewItemsFragment2_to_filmFragment"
+            app:destination="@id/filmFragment" />
+    </fragment>
 
 </navigation>
