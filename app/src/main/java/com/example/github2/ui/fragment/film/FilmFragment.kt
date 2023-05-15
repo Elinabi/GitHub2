@@ -1,24 +1,28 @@
-package com.example.github2.ui.fragment
+package com.example.github2.ui.fragment.film
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.github2.R
 import com.example.github2.databinding.FragmentFilmBinding
 import com.example.github2.model.FilmModel
+import com.example.github2.repository.FilmRepository
 import com.example.github2.ui.adapter.FilmAdapter
+import com.example.github2.ui.fragment.additem.AddingNewItemsFragment
+import com.example.github2.ui.fragment.detail.DetailFilmFragment
 
-@Suppress("CAST_NEVER_SUCCEEDS")
 class FilmFragment : Fragment() {
 
     private var binding: FragmentFilmBinding? = null
-    private var viewModel: FilmViewModel? = null
     private val listFilm = mutableListOf<FilmModel>()
     private val filmAdapter = FilmAdapter(listFilm, this::onItemClick)
+    private val args by navArgs<FilmFragmentArgs>()
+    private val repository = FilmRepository()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,11 +35,9 @@ class FilmFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this)[FilmViewModel::class.java]
-
         initialize()
-        setupObserves()
         setupListener()
+        getData()
     }
 
     private fun setupListener() {
@@ -45,12 +47,16 @@ class FilmFragment : Fragment() {
     }
 
     private fun initialize() {
-        binding?.mangaRecView?.adapter = filmAdapter
+        binding?.filmRecView?.adapter = filmAdapter
+        listFilm.addAll(repository.getListPictures())
     }
 
-    private fun setupObserves() {
-        viewModel?.getListPictures()?.observe(viewLifecycleOwner) {
-            filmAdapter.setupObserves(it as ArrayList<FilmModel>)
+    private fun getData() {
+
+        if (args.textsave.isNotEmpty()) {
+            listFilm.add(FilmModel("", args.textsave))
+        }else{
+            Log.e("ELSE", "NOT DATA", )
         }
     }
 
