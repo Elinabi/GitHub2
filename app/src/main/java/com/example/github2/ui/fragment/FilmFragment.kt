@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.github2.R
 import com.example.github2.databinding.FragmentFilmBinding
 import com.example.github2.model.FilmModel
 import com.example.github2.ui.adapter.FilmAdapter
@@ -17,7 +18,7 @@ class FilmFragment : Fragment() {
     private var binding: FragmentFilmBinding? = null
     private var viewModel: FilmViewModel? = null
     private val listFilm = mutableListOf<FilmModel>()
-    private val filmAdapter = FilmAdapter(listFilm,this::onItemClick)
+    private val filmAdapter = FilmAdapter(listFilm, this::onItemClick)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +35,13 @@ class FilmFragment : Fragment() {
 
         initialize()
         setupObserves()
+        setupListener()
+    }
+
+    private fun setupListener() {
+        binding?.btnAdd?.setOnClickListener {
+            findNavController().navigate(R.id.action_filmFragment_to_addingNewItemsFragment2)
+        }
     }
 
     private fun initialize() {
@@ -41,15 +49,17 @@ class FilmFragment : Fragment() {
     }
 
     private fun setupObserves() {
-        viewModel?.getListPictures()?.observe(viewLifecycleOwner){
+        viewModel?.getListPictures()?.observe(viewLifecycleOwner) {
             filmAdapter.setupObserves(it as ArrayList<FilmModel>)
         }
     }
 
     private fun onItemClick(filmModel: FilmModel) {
-        findNavController().navigate(FilmFragmentDirections.actionFilmFragmentToDetailFilmFragment(
-            filmModel.img,
-            filmModel.name)
+        findNavController().navigate(
+            FilmFragmentDirections.actionFilmFragmentToDetailFilmFragment(
+                filmModel.img,
+                filmModel.name
+            )
         )
     }
 }
