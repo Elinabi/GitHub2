@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_filmFragment_to_detailFilmFragment"
             app:destination="@id/detailFilmFragment" />
+        <action
+            android:id="@+id/action_filmFragment_to_addingNewItemsFragment2"
+            app:destination="@id/addingNewItemsFragment2" />
     </fragment>
     <fragment
         android:id="@+id/detailFilmFragment"
@@ -26,5 +29,10 @@
             android:name="name"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/addingNewItemsFragment2"
+        android:name="com.example.github2.ui.fragment.additem.AddingNewItemsFragment"
+        android:label="fragment_adding_new_items"
+        tools:layout="@layout/fragment_adding_new_items" />
 
 </navigation>
